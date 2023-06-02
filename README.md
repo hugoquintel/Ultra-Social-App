@@ -83,4 +83,3 @@ celery -A [app_name] worker --pool=eventlet
 * [Bulma](https://bulma.io/) - Bulma is a free, open source CSS framework based on Flexbox
 * [Django](https://www.djangoproject.com/) - Web framework
 * [jQuery](https://jquery.com/) - JavaScript library
->>>>>>> master
