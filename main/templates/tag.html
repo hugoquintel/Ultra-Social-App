@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block banner %}	
+<!-- Begin: Hero -->
+<link rel="stylesheet" href="{% static 'css/tag.css' %}">
+<section class="my-hero hero is-primary">
+	<div class="my-hero-body hero-body">
+		<p class="title">
+			#{{ tag.title }}
+		</p>
+	</div>
+</section>
+<!-- End: Hero -->
+{% endblock %}
+{% block content %}
+<!-- Begin: Post -->
+<section class="tags post section">
+	<div class="container">
+		<div class="columns is-mobile is-multiline is-centered">
+			{% for post in posts %}
+			<div class="column is-one-quarter">
+				<div class="box">
+					<figure class="tags-image image is-1by1">
+						<a href="{{ post.get_absolute_url }}">
+							<img src="{{ post.picture.url }}" alt="Image">
+						</a>
+					</figure>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+<!-- End: Post -->
+{% endblock %}
+
+
+

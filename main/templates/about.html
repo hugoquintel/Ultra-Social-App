@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<div class="about columns is-12 is-mobile is-centered">
+    <div class="column is-12 mt-5">
+        <div class=" column is-half is-offset-one-quarter">
+            <div class="content title has-text-centered has-text-info about-title">
+                Meet our team
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-6 about columns is-10 is-mobile is-centered">
+    <div class="about-content column is-4">
+        <div class="card column is-half is-offset-one-quarter ">
+            <div class="card-image has-text-centered">
+                <figure class="image is-256x256 ">
+                    <img class="is-rounded rounded about-img" src="{% static 'img/guilliman.jpg' %}" alt="Placeholder image">
+                </figure>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="content title is-3 has-text-centered">
+                    Châu Phạm Quốc Hưng
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about-content column is-4">
+        <div class="card column is-half is-offset-one-quarter ">
+            <div class="card-image has-text-centered">
+                <figure class="image is-256x256 ">
+                    <img class="is-rounded rounded about-img" src="{% static 'img/ha.jpg' %}" alt="Placeholder image">
+                </figure>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="content title is-3 has-text-centered">
+                    Mạc Hoàng Hà
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about-content column is-4">
+        <div class="card column is-half is-offset-one-quarter ">
+            <div class="card-image has-text-centered">
+                <figure class="image is-256x256">
+                    <img class="is-rounded rounded about-img" src="{% static 'img/duy.png' %}" alt="Placeholder image">
+                </figure>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="content title is-3 has-text-centered">
+                    Hứa Bảo Duy
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about mt-5 columns is-12 is-mobile is-centered">
+    <div class="column is-12 ">
+        <div class="card column is-half is-offset-one-quarter has-background-success-light">
+            <div class="content title is-3 has-text-centered">
+                <i class="mr-4 fa-solid fa-heart is-1 title has-text-danger pull-down-2px"></i>
+                This project is made with love and care
+                <i class="ml-4 fa-solid fa-heart is-1 title has-text-danger pull-down-2px"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about mt-5 columns is-12 is-mobile is-centered ">
+    <div class="column is-12 ">
+        <div class="card column is-half is-offset-one-quarter has-background-info-light">
+            <div class="card-content ">
+                <div class="content title is-3 has-text-centered">             
+                    Big thanks to 
+                    <i class="fa-solid fa-star has-text-warning"></i>
+                    <a href="https://www.youtube.com/@laracode7372" target="_blank">Lara Code</a>
+                    <i class="fa-solid fa-star has-text-warning"></i>
+                    Most of the code in this project is based on his Django series. You can check it out at: 
+                    <a href="https://www.youtube.com/watch?v=Ij1MCRk-d6c&list=PL9tgJISrBWc5619CclyqYrnnMkVOPzVYM&ab_channel=LaraCode" target="_blank">Link</a>
+                </div>
+                <div class="content title is-3"> 
+                    <ul>
+                        Material used for this project:
+                        <li class="subtitle is-3 ml-6 mt-3 mb-0">
+                            <i class="fa-brands fa-python"></i>
+                            <a href="https://www.djangoproject.com/" target="_blank">Django</a>
+                            <i class="fa-brands fa-python"></i>
+                        </li>
+                        <li class="subtitle is-3 ml-6 mt-3 mb-0">
+                            <i class="fa-brands fa-square-js"></i>
+                            <a href="https://jquery.com/" target="_blank">Jquery</a>
+                            <i class="fa-brands fa-square-js"></i>
+                        </li>
+                        <li class="subtitle is-3 ml-6 mt-3 mb-0">
+                            <i class="fa-brands fa-css3-alt"></i>
+                            <a href="" target="_blank">Bulma</a>
+                            <i class="fa-brands fa-css3-alt"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+<div class="my-notification column is-10 is-size-5">
+	<div class="mt-6"></div>
+	<div class="mt-4"></div>
+	<div class="column is-6 is-size-4">
+	{% for notification in notifications %}
+		<!-- Begin: Comment notification -->
+		{% if notification.notification_type == 2 %}
+		<div class="notification pr-4 mt-6">
+			<article class="media">
+				<a href="{% url 'profile' notification.sender %}">
+					<figure class="media-left">
+						<p class="image is-64x64">
+							{% if notification.sender.profile.picture %}
+							<img class="notification-profile-img is-rounded" src="{{notification.sender.profile.picture.url}}" alt="Placeholder image">
+							{% else %}
+							<img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+							{% endif %}
+						</p>
+					</figure>
+				</a>
+				<div class="media-content">
+					<div class="content">
+						<p class="mb-0">
+							<strong>
+								{% if notification.sender.profile.first_name or notification.sender.profile.last_name %}
+									{{notification.sender.profile.first_name}} {{notification.sender.profile.last_name}}
+								{% else %}
+									User {{notification.sender.id}}
+								{% endif %}
+							</strong> 
+							commented:
+							<i class="fa-regular fa-comment"></i>
+							<p class="mb-0">
+								{{notification.text_preview}}
+							</p> 
+							<strong><small>{{notification.date|naturaltime}}</small></strong>
+						</p>
+					</div>
+				</div>
+				<a href="{% url 'postdetails' notification.post.id %}">
+					<div class="media-right">
+						{% if notification.post.picture.name|slice:"-3:" == 'jpg' or notification.post.picture.name|slice:"-3:" == 'png' %}
+						<figure class="image is-128x128">
+								<img class="notification-post-img" src="{{notification.post.picture.url}}" alt>
+						</figure>
+						{% else  %}
+						<video width="200px">
+							<source  src="{{notification.post.picture.url}}#t=0.5" type="video/mp4">
+						</video>
+						{% endif  %}
+					</div>
+				</a>
+				<div class="media-right">
+					<a href="{% url 'delete-notification' notification.id %}" class="notification-btn delete is-medium has-background-danger"></a>
+				</div>
+			</article>
+		</div>
+		<!-- End: Comment notification -->
+		<!-- Begin: Follow notification -->
+		{% elif notification.notification_type == 3 %}
+		<div class="notification pr-4 mt-6">
+			<article class="media">
+				<a href="{% url 'profile' notification.sender %}">
+					<figure class="media-left">
+						<p class="image is-64x64">
+							{% if notification.sender.profile.picture %}
+							<img class="notification-profile-img is-rounded" src="{{notification.sender.profile.picture.url}}" alt="Placeholder image">
+							{% else %}
+							<img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+							{% endif %}
+						</p>
+					</figure>
+				</a>
+				<div class="media-content">
+					<div class="content">
+						<p class="mb-0">
+							<strong>
+								{% if notification.sender.profile.first_name or notification.sender.profile.last_name %}
+									{{notification.sender.profile.first_name}} {{notification.sender.profile.last_name}}
+								{% else %}
+									User {{notification.sender.id}}
+								{% endif %}
+							</strong> 
+							started following you
+							<i class="fa-solid fa-user-plus"></i>
+							<p class="mb-0"></p> 
+							<strong><small>{{notification.date|naturaltime}}</small></strong>
+						</p>
+					</div>
+				</div>
+				<div class="media-right">
+					<a href="{% url 'delete-notification' notification.id %}" class="notification-btn delete is-medium has-background-danger"></a>
+				</div>
+			</article>
+		</div>
+		<!-- End: Follow notification -->
+		<!-- Begin: Like notification -->
+		{% elif notification.notification_type == 1 %}
+		<div class="notification pr-4 mt-6">
+			<article class="media">
+				<a href="{% url 'profile' notification.sender %}">
+					<figure class="media-left">
+						<p class="image is-64x64">
+							{% if notification.sender.profile.picture %}
+							<img class="notification-profile-img is-rounded" src="{{notification.sender.profile.picture.url}}" alt="Placeholder image">
+							{% else %}
+							<img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+							{% endif %}
+						</p>
+					</figure>
+				</a>
+				<div class="media-content">
+					<div class="content">
+						<p class="mb-0">
+							
+							<strong>
+								{% if notification.sender.profile.first_name or notification.sender.profile.last_name %}
+									{{notification.sender.profile.first_name}} {{notification.sender.profile.last_name}}
+								{% else %}
+									User {{notification.sender.id}}
+								{% endif %}
+							</strong> 
+							liked your post
+							<i class="fa-regular fa-heart"></i>
+							<p class="mb-0"></p> 
+							<strong><small>{{notification.date|naturaltime }}</small></strong>
+						</p>
+					</div>
+				</div>
+				<a href="{% url 'postdetails' notification.post.id %}">
+					<div class="media-right">
+						{% if notification.post.picture.name|slice:"-3:" == 'jpg' or notification.post.picture.name|slice:"-3:" == 'png' %}
+						<figure class="image is-128x128">
+								<img class="notification-post-img" src="{{notification.post.picture.url}}" alt>
+						</figure>
+						{% else  %}
+						<video width="200px">
+							<source  src="{{notification.post.picture.url}}#t=0.5" type="video/mp4">
+						</video>
+						{% endif  %}
+					</div>
+				</a>
+				<div class="media-right">
+					<a href="{% url 'delete-notification' notification.id %}" class="notification-btn delete is-medium has-background-danger"></a>
+				</div>
+			</article>
+		</div>
+		{% endif %}
+		<!-- End: Like notification -->
+		{% empty %}
+		<div class="mt-6 notification is-link is-light has-text-centered subtitle is-1">
+			There is no notification yet
+		</div>
+		<div class="card-image has-text-centered">
+			<figure class="image is-256x256 is-inline-block">
+				<img class="" src="{% static 'img/no-noti.jpg' %}">
+			</figure>
+		</div>
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+

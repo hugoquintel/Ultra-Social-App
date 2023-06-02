@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<div class="contact columns is-12 is-mobile is-centered">
+    <div class="column is-12 mt-5">
+        <div class=" column is-half is-offset-one-quarter">
+            <div class="content title has-text-centered has-text-danger contact-title">
+                Got a problem? 
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-5 contact columns is-10 is-mobile is-centered">
+    <div class="contact-content column is-4">
+        <figure class="image is-256x256 ">
+            <img src="{% static 'img/problem.png' %}" alt="Placeholder image">
+        </figure>
+    </div>
+</div>
+<div class="contact columns is-12 is-mobile is-centered mt-5">
+    <div class="column is-12 ">
+        <div class="card column is-half is-offset-one-quarter has-background-info-light">
+            <div class="card-content ">
+                <div class="content title is-2 has-text-centered">
+                    <i class="fa-regular fa-envelope has-text-info"></i>
+                    Send your feedback here:
+                    <a href="mailto:20521360@gm.uit.edu.vn" target="_blank">20521360@gm.uit.edu.vn</a>
+                </div>
+                <div class="content title is-3 has-text-centered">
+                    <div class="content title is-2 has-text-centered">
+                        <i class="fa-solid fa-coins has-text-warning"></i>
+                        Support me:
+                    </div>
+                    <p class="subtitle is-3 mt-2 mb-0">
+                        <i class="fa-solid fa-money-bill has-text-primary"></i>
+                        Online banking:
+                        <span class="is-underlined">
+                            31410003999256
+                        </span>
+                    </p>
+                    <p class="subtitle is-3 mt-2 mb-0">
+                        <i class="fa-solid fa-money-bill has-text-primary"></i>
+                        Momo:
+                        <span class="is-underlined">
+                            0944533476
+                        </span> 
+                    </p>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

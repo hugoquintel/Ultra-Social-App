@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<div class="post column is-7">
+	<!-- Begin: Story -->
+	<div class="story columns is-9">
+		<a href="{% url 'newstory' %}" class="media-left mb-4 mr-5 is-relative">
+			<div class="story-new is-rounded">
+				<div class="story-new-bar1"></div>
+				<div class="story-new-bar2"></div>
+			</div>		
+			<figure class="image is-128x128px">
+				{% if user.profile.picture %}
+				<img class="story-img is-rounded" src="{{ user.profile.picture.url }}" alt="Placeholder image">
+				{% else %}
+				<img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" alt="Placeholder image">
+				{% endif %}
+			</figure>
+			<div class="media-content">
+				<div class="content has-text-centered is-size-4">
+					<strong class="has-text-dark">Add story</strong>
+				</div>
+			</div>
+		</a>
+		<!-- Begin: story view -->
+		{% for story in stories %}
+		<a name="{{ story.id }}" class="showModal media-left mb-4 mr-5">
+			<figure class="image is-128x128px">
+				{% if story.following.profile.picture %}
+				<img class="story-img is-rounded" src="{{ story.following.profile.picture.url }}" alt="Placeholder image">
+				{% else %}
+				<img class="story-img is-rounded" src="https://bulma.io/images/placeholders/128x128.png" alt="Placeholder image">
+				{% endif %}
+			</figure>
+			<div class="media-content">
+				<div class="content has-text-centered is-size-4">
+					<strong class="has-text-dark">{{ story.following.username }}</strong>
+				</div>
+			</div>
+		</a>
+		{% endfor %}
+		<!-- End: story view -->
+	</div>
+	<!-- End: Story -->
+
+	<!-- Begin: Post -->
+	{% for post_item in post_items %}
+	<div class="post__card card">
+		<div class="card-image">
+			{% if post_item.content.first.file.name|slice:"-3:" == 'jpg' or post_item.content.first.file.name|slice:"-3:" == 'png' %}
+			<figure class="image is-1by1">
+				<a href="{{ post_item.get_absolute_url }}">
+					<img src="{{ post_item.content.first.file.url }}" alt="Placeholder image">
+				</a>
+			</figure>
+			{% else %}
+			<a href="{{ post_item.get_absolute_url }}">
+				<video class="is-clickable" controls="controls" preload="metadata">
+					<source src="{{ post_item.content.first.file.url }}#t=0.5" type="video/mp4">
+				</video>
+			</a>
+			{% endif %}
+		</div>
+		<div class="card-content">
+			<div class="media mb-2">
+				<div class="media-left">
+					<figure class="image is-48x48">
+						<a href="{% url 'profile' post_item.user %}">
+							{% if post_item.user.profile.picture %}
+							<img class="post__card-profile-img is-rounded" src="{{post_item.user.profile.picture.url}}" alt="Placeholder image">
+							{% else %}
+							<img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png" alt="Placeholder image">
+							{% endif %}
+						</a>
+					</figure>
+				</div>
+				<div class="post__card-media-content media-content">
+					<a href="{% url 'profile' post_item.user %}">
+						{% if post_item.user.profile.first_name or post_item.user.profile.last_name %}
+						<p class="m-0 title is-4">{{post_item.user.profile.first_name}} {{post_item.user.profile.last_name}}</p>
+						{% else %}
+						<p class="m-0 title is-4">User {{post_item.user.id}}</p>
+						{% endif %}
+					</a>
+					<a href="{% url 'profile' post_item.user %}">
+						<p class="mt-2 subtitle is-5">@{{post_item.user.username}}</p>
+					</a>
+				</div>
+				<div class="post__card-content-btns media-right is-size-2">
+					<span class="mr-5">
+						{% if post_item.id not in user_liked_post_id %}
+						<div post-id="{{post_item.id}}" style="cursor: pointer" class="post__card-content-btn like"><i class="fa-regular fa-heart"></i></div>
+						{% else %}
+						<div post-id="{{post_item.id}}" style="cursor: pointer" class="post__card-content-btn like"><i class="fa-solid fa-heart"></i></div>
+						{% endif %}
+						<p post-id="{{post_item.id}}" class="post__card-content-like subtitle is-5">{{ post_item.likes }} Likes</p>
+					</span>
+					<span>
+						{% if post_item.id not in user_favorites_post_id %}
+						<div post-id="{{post_item.id}}" style="cursor: pointer" class="post__card-content-btn favorite"><i class="fa-regular fa-bookmark"></i></div>
+						<p post-id="{{post_item.id}}" class="subtitle is-5 post__card-content-favorite">Save</p>
+						{% else %}
+						<div post-id="{{post_item.id}}" style="cursor: pointer" class="post__card-content-btn favorite"><i class="fa-solid fa-bookmark"></i></div>
+						<p post-id="{{post_item.id}}" class="subtitle is-5 post__card-content-favorite">Saved</p>
+						{% endif %}
+					</span>
+				</div>
+			</div>	
+			<div class="content mt-4">
+				<p class="m-0 subtitle is-5">
+					{{ post_item.caption }}
+				</p>
+				<p class="m-0 subtitle is-5">
+					{% for tag in post_item.tags.all %}
+					<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>
+					{% endfor %}
+				</p>
+				<br>
+				<time class="m-0 subtitle is-5">{{ post_item.posted }}</time>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+	<!-- End: Post -->
+	<!-- Begin: Profile -->
+	<div class="profile column is-one-quarter">
+		<div class="profile__card card">
+			<div class="profile__card-image card-image">
+				<figure class="image is-3by2">
+					{% if profile.backgroundimage %}
+					<img src="{{ profile.backgroundimage.url }}">
+					{% else %}
+					<img src="https://bulma.io/images/placeholders/256x256.png">
+					{% endif %}
+				</figure>
+				<div class="profile__card-image-media media">
+					<figure class="image is-96x96 ">
+						<a href="{% url 'profile' profile.user %}">
+							{% if profile.picture %}
+							<img class="profile__card-image-media-profile_picture rounded is-rounded" src="{{ profile.picture.url }}">
+							{% else %}
+							<img class="profile__card-image-media-profile_picture rounded is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+							{% endif %}
+						</a>
+					</figure>
+				</div>
+			</div>
+			<div class="profile__card-content card-content">
+				<div class="profile__card-content-media-content media-content">
+					<a href="{% url 'profile' profile.user %}">
+						<p class="title is-4">
+							{% if profile.first_name %}
+								{{ profile.first_name}} {{ profile.last_name }} 
+							{% else %}
+								User {{ profile.id }}
+							{% endif %}
+						</p>
+					</a>
+					<a href="">
+						<p class="subtitle is-5 mt-1">@{{ profile.user }}</p>
+					</a>
+				</div>
+				<div class="profile__card-content-content subtitle is-5 mt-4">
+					{% if profile.profile_info %}
+						{{ profile.profile_info }}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="title mt-6 mb-3 is-3"><i class="fa-solid fa-user mr-4"></i>People you follow:</div>
+		<div class="box profile__card-following">
+			{% for user in users_following %}
+			<a href="{% url 'profile' user.user %}" class="media">
+				<figure class="media-left">
+					<p class="image is-64x64">
+						{% if user.picture %}
+						<img class="profile__card-following-img is-rounded" src="{{ user.picture.url }}">
+						{% else %}
+						<img class="profile__card-following-img is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+						{% endif %}
+					</p>
+				</figure>
+				<div class="media-content">
+					<div class="content">
+						{% if post_item.user.profile.first_name or post_item.user.profile.last_name %}
+						<p class="title is-4">{{user.first_name}} {{user.last_name}}</p>
+						{% else %}
+						<p class="title is-4">User {{user.id}}</p>
+						{% endif %}
+						<p class="subtitle is-4">@{{ user.user }}</p >
+					</div>
+				</div>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+	<!-- End: Profile -->
+	<!-- Begin: Stories modal -->
+	<div class="modal">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="slideshow-container">
+				<!-- Full-width images with number and caption text -->
+				<!-- <div class="mySlides fade">
+					<div class="box">
+						<div class="media-left m-0">
+							<div class="content mb-3">
+								<strong class="title is-3">@John Smith </strong> 
+								<small class="subtitle is-4 ml-3 m-0">31m</small>	
+							</div>
+							<progress class="progress progress-bar-js" max="100"></progress>
+						</div>
+						<figure class="image is-4by5">
+							{% comment %}
+							<img src="{% static 'img/lion.jpg' %}" alt="Image">
+							{% endcomment %}
+						</figure>
+					</div>
+					<div class="text">Caption Text</div>
+				</div> -->
+				<div id="jsondata"></div>
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  				<a class="next" onclick="plusSlides(1)">&#10095;</a>
+			</div>
+		</div>
+		<button class="modal-close is-large has-background-danger closeModal story-close-btn" aria-label="close"></button>
+	</div>
+	<!-- End: Stories modal -->
+</div>
+<script src="{% static 'js/story.js' %}"></script>
+<script src="{% static 'js/index_ajax.js' %}"></script>
+{% endblock %}

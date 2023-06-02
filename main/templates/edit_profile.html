@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+<div class="profile column is-10">
+    <section class="section">
+        <div class="container">
+            <div class="columns is-mobile is-centered has-text-centered">
+                <div class="column is-half">
+                    <div class="card">
+                        <div class="card-content">
+                            <form method="post" enctype="multipart/form-data" action="" role="form"> {% csrf_token %}
+                                <h3 class="title is-size-1">Edit profile</h3>
+                                <hr>
+                                <div class="field mb-6">
+                                    <div class="profile-form-content field mb-6" >
+                                        <figure class="image is-256x256">
+                                            {% if profile.backgroundimage %}
+                                            <img class="img-review" src="{{ profile.backgroundimage.url }}">
+                                            {% else %}
+                                            <img class="img-review" src="https://bulma.io/images/placeholders/256x256.png">
+                                            {% endif %}
+                                        </figure>
+                                        <p class="newpost-form-content control mt-4">
+                                            <label class="label is-large has-text-info title is-size-4">Upload background image</label>
+                                            {{ form.backgroundimage }}
+                                        </p>
+                                    </div>
+                                    <div class="profile-form-content field" >
+                                        <figure class="profile-image image is-128x128">
+                                            {% if profile.picture %}
+                                            <img class="profile-image-img is-rounded img-review" src="{{ profile.picture.url }}">
+                                            {% else %}
+                                            <img class="profile-image-img is-rounded img-review" src="https://bulma.io/images/placeholders/128x128.png">
+                                            {% endif %}
+                                        </figure>
+                                        <p class="newpost-form-content control mt-4">
+                                            <label class="label is-large has-text-info title is-size-4">Upload profile picture</label>
+                                            {{ form.picture }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <p class="profile-form-content-text login-content-input control">
+                                        <label class="label is-large has-text-info is-pulled-left">First Name</label>
+                                        {{form.first_name}}  
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <p class="profile-form-content-text login-content-input control">
+                                        <label class="label is-large has-text-info is-pulled-left">Last Name</label>
+                                        {{ form.last_name }}
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <p class="profile-form-content-text login-content-input control">
+                                        <label class="label is-large has-text-info is-pulled-left">Location</label>
+                                        {{ form.location }}
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <p class="profile-form-content-text login-content-input control">
+                                        <label class="label is-large has-text-info is-pulled-left">url</label>
+                                        {{ form.url }}
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <p class="profile-form-content-text login-content-input control">
+                                        <label class="label is-large has-text-info is-pulled-left">Biography</label>
+                                        {{ form.profile_info }}
+                                    </p>
+                                </div>
+                                <div class="row">
+									<div class="col s12">
+										<span style="color: red; font-weight: bold;">{{ form.errors }}</span>
+									</div>
+								</div>
+                                <div class="field">
+                                    <p class="control">
+                                        <button type="submit" name="action" class="button is-info is-medium is-primary is-fullwidth mt-5">
+                                            Update
+                                        </button>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="{% static 'js/review_images.js' %}"></script>
+{% endblock %}

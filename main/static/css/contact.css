@@ -1,0 +1,23 @@
+hr{
+    background-color: #f0f0f0;
+}
+
+html{
+    background-color: #f0f0f0;
+}
+
+.contact{
+    margin-left: 16.66667%;
+    
+}
+
+.contact-title{
+    font-size: 5rem;
+}
+
+.contact-img{
+    border: 5px solid #ccc;
+    max-width: 256px;
+    max-height: 256px;
+    min-height: 256px;
+}

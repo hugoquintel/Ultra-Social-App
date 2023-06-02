@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/explore.css' %}">
+<div class="explore column is-10">
+  	<div class="explore__card column is-5 has-text-centered ">
+		<form action="">
+			<div class="field has-addons">
+				<div class="control is-expanded">
+					<input name="q" class="input is-large" type="text" placeholder="Search for people or tags" value="{{request.GET.q}}">
+				</div>
+				<div class="control">
+					<button class="button is-info is-large mr-0">
+						Search
+					</button>
+				</div>
+			</div>
+		</form>
+		<div class="card mt-6">
+			<div class="card-content" >
+				<div class="columns has-text-left" style="overflow-x: scroll;">
+					<span class="title is-3 pull-down-1px mb-3" style="word-break: normal;">Tags:</span>
+					{% for tag in tags %}
+					<a href="{{tag.get_absolute_url}}" class="m-0 subtitle is-3 ml-3 has-text-info" style="word-break: normal">{{tag.title}},</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<ul class="explore__card-list menu-list">
+			{% for user in users %}
+			<div class="explore__card-item box mt-6">
+				<article class="media">
+					<div class="media-left">
+						<a href="{% url 'profile' user %}">
+							<figure class="image is-64x64">
+								{% if user.profile.picture %}
+								<img class="explore__card-item-img is-rounded" src="{{ user.profile.picture.url }}">
+								{% else %}
+								<img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Image">
+								{% endif %}
+							</figure>
+						</a>
+					</div>
+					<div class="media-content columns">
+						<div class="content column is-5 has-text-left">
+							<p class="title is-4 mt-3 mb-3">
+								{% if user.profile.first_name %}
+									{{ user.profile.first_name}} {{ user.profile.last_name }} 
+								{% else %}
+									User {{ user.profile.id }}
+								{% endif %}
+							</p>
+							<p class="subtitle is-5 mt-0">@{{ user.username }}</p>
+						</div>
+						<br>
+						<div class="field column is-7 mb-0 ">
+							<p class="control">
+								<div class="buttons are-large level-right">
+									{% if user.username in users_following %}
+									<div user-id="{{user.id}}" option="0" name="{{user.username}}" class="button is-primary mb-0 mt-5 follow"><i class="fa-solid fa-check mr-2"></i>Followed</div>
+									<!-- {% comment %}
+									<a href="{% url 'follow' user 0 %}" class="button is-primary mb-0 mt-5"><i class="fa-solid fa-check mr-2"></i>Followed</a>
+									{% endcomment %} -->
+									{% else %}
+									<div user-id="{{user.id}}" option="1" name="{{user.username}}" class="button is-info mb-0 mt-5 follow">Follow</div>
+									{% endif %}
+								</div>
+							</p>
+						</div>
+					</div>
+				</article>
+			</div>
+			{% endfor %}
+		</ul>
+    </div>	
+</div>
+<script src="{% static 'js/explore_ajax.js' %}"></script>
+{% endblock %}

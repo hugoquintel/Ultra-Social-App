@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+<div class="post column is-10 is-size-5">
+	<div class="post__card card">
+		<div class="card-image">
+			<div class="slideshow-container">
+				{% for content in post.content.all %}
+				<div class="mySlides fade">
+					<div class="numbertext" style="z-index: 10">{{forloop.counter}} / {{post.content.all.count}} </div>
+					{% if content.file.name|slice:"-3:" == 'jpg' or content.file.name|slice:"-3:" == 'png' %}
+					<figure class="image is-1by1">
+							<img src="{{ content.file.url }}" alt="Placeholder image">
+					</figure>
+					{% else %}
+					<video class="is-clickable" controls="controls" preload="metadata">
+						<source src="{{ content.file.url }}#t=0.5" type="video/mp4">
+					</video>
+					{% endif %}
+				</div>
+				{% endfor %}
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  				<a class="next" onclick="plusSlides(1)">&#10095;</a>
+			</div>
+		</div>
+		<div class="post__card-content card-content">
+			<div class="media mb-3">
+				<a href="{% url 'profile' post.user %}">
+					<div class="media-left">
+						<figure class="image is-48x48">
+							{% if post.user.profile.picture %}
+							<img class="post__card-content-img is-rounded" src="{{post.user.profile.picture.url}}" alt="Placeholder image">
+							{% else %}
+							<img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png" alt="Placeholder image">
+							{% endif %}
+						</figure>
+					</div>
+				</a>
+				<div class="post__card-media-content media-content">
+					{% if post.user.profile.first_name or post.user.profile.last_name %}
+					<p class="mb-0 title is-4">{{post.user.profile.first_name}} {{post.user.profile.last_name}}</p>
+					{% else %}
+					<p class="mb-0 title is-4">User {{post.user.id}}</p>
+					{% endif %}
+					<p class="subtitle is-4 mt-3">@{{ post.user.username }}</p>
+				</div>
+				<div class="post__card-content-btns media-right is-size-2">
+					<!-- Like button -->
+					<span class="mr-6">
+						{% if not liked %}
+						<div post-id="{{post.id}}" style="cursor: pointer" class="post__card-content-btn like"><i class="fa-regular fa-heart"></i></div>
+						{% else %}
+						<div post-id="{{post.id}}" style="cursor: pointer" class="post__card-content-btn like"><i class="fa-solid fa-heart"></i></div>
+						{% endif %}
+						<p class="post__card-content-like subtitle is-4">{{ post.likes }} Likes</p>
+					</span>
+					<!-- Favorite button -->
+					<span>
+						{% if not favorited %}
+						<div post-id="{{post.id}}" style="cursor: pointer" class="post__card-content-btn favorite"><i class="fa-regular fa-bookmark"></i></div>
+						<p class="post__card-content-favorite subtitle is-4">Save</p>
+						{% else %}
+						<div post-id="{{post.id}}" style="cursor: pointer" class="post__card-content-btn favorite"><i class="fa-solid fa-bookmark"></i></div>
+						<p class="post__card-content-favorite subtitle is-4">Saved</p>
+						{% endif %}
+					</span>
+				</div>
+			</div>
+			<div class="content">
+				<p class="subtitle is-4 mb-1">
+					{{ post.caption }}
+					{% for tag in post.tags.all %}
+						<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>
+					{% endfor %}
+				</p>
+				<time>{{ post.posted }}</time>
+				{% if post.user == request.user %}
+				<div class="is-danger is-clickable is-pulled-right pull-up-8px mr-4 showModal">
+					<i class="fa-solid fa-trash is-size-3 has-text-danger"></i>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<!-- Begin: Comment -->
+		{% for comment in comments %}
+		<article class="post__card-comment media border-none m-0">
+			<a href="{% url 'profile' comment.user %}">
+				<figure class="media-left">
+					<p class="image is-48x48">
+						{% if comment.user.profile.picture %}
+						<img class="post__card-comment-img is-rounded" src="{{comment.user.profile.picture.url}}" alt="Placeholder image">
+						{% else %}
+						<img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png" alt="Placeholder image">
+						{% endif %}
+					</p>
+				</figure>
+			</a>
+			<div class="media-content">
+				<div class="content">
+					<p class="mb-1">
+						{% if comment.user.profile.first_name or comment.user.profile.last_name %}
+						<strong class="title is-4">{{comment.user.profile.first_name}} {{comment.user.profile.last_name}}</strong>
+						{% else %}
+						<strong class="title is-4">User {{comment.user.id}}</strong>
+						{% endif %}
+						<small class="subtitle is-4">@{{comment.user.username}}</small>
+						<p class="mb-2 subtitle is-4">{{ comment.body }}</p>
+						<strong class="title is-4"><small>{{ comment.date|naturaltime }}</small></strong>
+					</p>
+				</div>
+			</div>
+		</article>
+		{% endfor %}
+		<article class="post__card-comment pb-0 border-none m-0 media">
+			<figure class="media-left">
+			<p class="image is-48x48">
+				{% if request.user.profile.picture %}
+				<img class="post__card-comment-img is-rounded" src="{{request.user.profile.picture.url}}" alt="Placeholder image">
+				{% else %}
+				<img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" alt="Placeholder image">
+				{% endif %}
+			</p>
+			</figure>
+			<div class="media-content">
+				<form id="post-comment" action="" method="post" role="form"> {% csrf_token %}
+					<input type="hidden" id="post-id" value="{{post.id}}">
+					<input type="hidden" id="user-id" value="{{request.user}}">
+					<div class="field">
+						<p class="control">
+							{{ form.body }}
+						</p>
+					</div>
+					<div class="field">
+						<p class="control">
+							<div class="buttons are-medium level-right">
+								<button type="submit" name="action" class="button is-info is-light">Post comment</button>
+							</div>
+						</p>
+					</div>
+				</form>
+			</div>
+		</article>	
+		<!-- End: Comment -->
+	</div>
+</div>
+<div class="modal">
+	<div class="modal-background"></div>
+	<div class="modal-content ">
+		<div class="column has-background-white has-text-centered is-size-2">
+			<p class="bd-notification is-info">
+				<strong>Are you sure want to delete this post ?</strong>
+			</p>
+			<hr class="post-delete-hr">
+			<div class="columns is-mobile">
+				<div class="column post-delete-modal">
+					<a href="{% url 'delete-post' post.id %}" class="bd-notification is-info is-block has-text-danger">Yes, i'm sure</a>
+				</div>
+				<div class="is-divider-vertical"></div>
+				<div class="column post-delete-modal">
+					<p class="bd-notification is-info is-clickable closeModal">No, take me back</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{% static 'js/multiple_posts.js' %}"></script>
+<script src="{% static 'js/post_detail_ajax.js' %}"></script>
+<script src="{% static 'js/delete_post.js' %}"></script>
+{% endblock %}

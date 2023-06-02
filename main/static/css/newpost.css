@@ -1,0 +1,9 @@
+.newpost{
+    margin-top: 30px;
+	width: 100%;
+	margin-left: 16.66667%;
+}
+
+.newpost-form-content input[type="file"]{
+    width: 176px;
+}

@@ -1,0 +1,85 @@
+hr{
+    background-color: #f0f0f0;
+}
+
+.message{
+	width: 100%;
+	margin-left: 16.66667%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    height: 100vh;
+}
+
+.message__card{
+	margin-top: 40px;
+    
+}
+
+.message__card-list{
+    overflow-y: scroll;
+    height: 79vh;
+}
+
+.message__card-item-search-btn{
+    width: 97%
+}
+
+.message__card__text-list{
+    overflow-y: scroll;
+    height: 54vh;
+}
+
+.message__card__text{
+	position: relative;
+    
+}
+
+.message__card__text-chat{
+    position: absolute;
+    width: 95%;
+    bottom: 0
+}
+
+.message__card-item-img,
+.message__card__text-chat-img{
+    min-width:64px;
+	min-height:64px;
+	max-width:64px;
+	max-height:64px;
+}
+
+.message__card-item{
+    text-decoration: none !important;
+}
+
+.message__card-item:hover{
+    background-color: #fff !important
+}
+
+.item-is-active{
+    background-color: #D9D9D9;
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track{
+
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+   
+  /* Handle */
+::-webkit-scrollbar-thumb{
+    
+    border-radius: 10px;
+    background: #888; 
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover{
+    background: #555; 
+}

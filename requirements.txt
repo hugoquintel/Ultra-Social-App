@@ -1,0 +1,4 @@
+eventlet==0.33.3
+Django==4.1
+celery==5.2.7
+django-celery-beat==2.2.1

@@ -1,0 +1,167 @@
+.main{
+  	display: flex;
+	justify-content: space-between;
+}
+
+/* Begin: Feed */
+.post{
+	width: 100%;
+	margin-left: 16.66667%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.story{
+	margin-top: 30px;
+	overflow-x: scroll;
+	width: 65%;
+	
+}
+
+.story-new{
+	width: 40px;
+	height: 40px;
+	right: 0;
+	z-index: 1;
+	background-color: #ccc;
+	position: absolute;
+	border: 1px solid #5A5A5A;
+	border-radius: 50%;
+}
+
+.story-new-bar1,
+.story-new-bar2{
+	position: absolute;
+	background-color: #fff;
+	top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translate(-50%, -50%);
+	border-radius: 50px;
+}
+
+.story-new-bar1{
+	width: 55%;
+	height: 5%;
+}
+
+.story-new-bar2{
+	height: 55%;
+	width: 5%;	
+}
+
+.story-new-content{
+	position: absolute;
+	top: 103%;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+.story-img{
+	border: 3px solid #ccc;
+	min-width:128px;
+	min-height:128px;
+	max-width:128px;
+	max-height:128px;
+}
+
+.story-close-btn:hover{
+    opacity: 0.8;
+}
+
+.post__card{
+	margin-top: 60px;
+	width: 50%;
+}
+
+.post__card-content-btns{
+    display: flex;
+}
+
+.post__card-content-btn{
+    color: #000;
+    margin-top: -20%;
+}
+
+.post__card-content-btns span{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* End: Feed */
+
+.profile{
+	position: fixed;
+	margin-left: 83%;
+	margin-top: 30px;
+}
+
+.profile__card{
+	width: 80%;
+}
+
+.profile__card-image{
+	position: relative;
+	margin-bottom: 45px;
+}
+
+.profile__card-image-media{
+	position: absolute;
+	top: 78%;
+	justify-content: center;
+	width: 100%;
+}
+
+.profile__card-content-media{
+	justify-content: space-around;
+	top: 100%
+}
+
+
+.profile__card-content-media-content{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.profile__card-content-content{
+	text-align: center;
+}
+
+.post__card-profile-img{
+	min-width:48px;
+	min-height:48px;
+	max-width:48px;
+	max-height:48px;
+}
+
+.profile__card-image-media-profile_picture{
+	border: 2px solid white;
+	min-width:96px;
+	min-height:96px;
+	max-width:96px;
+	max-height:96px;
+}
+
+.profile__card-following-img{
+	border: 2px solid #ccc;
+	min-width:64px;
+	min-height:64px;
+	max-width:64px;
+	max-height:64px;
+}
+
+.profile__card-following{
+	overflow-y: scroll; 
+	max-height:50vh; 
+	width: 80%;
+}
+
+
+

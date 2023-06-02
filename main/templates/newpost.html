@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/newpost.css' %}" />
+<div class="newpost column is-10">
+	<div class="columns is-mobile is-centered has-text-centered">
+		<div class="column is-6">
+			<div class="card">
+				<div class="card-content">
+					<form class="newpost-form" method="post" action="" enctype="multipart/form-data" role="form">{% csrf_token %}
+						<h3 class="title is-size-1">New post</h3>
+						<hr>
+						<div class="field slider">
+							<figure class="image is-256x256 placeholder">
+								<img class="img-review" src="{% static 'img/placeholder.jpg' %}">
+							</figure>
+						<p class="newpost-form-content control mt-4">
+							<label class="label is-large has-text-info title is-size-3">Upload your files</label>
+							{{ form.content }}
+						</p>
+						</div>
+						<div class="field">
+						<p class="newpost-form-content control">
+							<label class="label is-large has-text-info is-pulled-left">Caption</label>
+							{{ form.caption }}
+						</p>
+						</div>
+						<div class="field">
+						<p class="newpost-form-content control">
+							<label class="label is-large has-text-info is-pulled-left">Tags (add tags, separated by commas)</label>
+							{{ form.tags }}
+						</p>
+						</div>
+						<div class="field">
+						<p class="control">
+							<button type="submit" name="action" class="button is-info is-medium is-primary is-fullwidth mt-5">
+							Create
+							</button>
+						</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{% static 'js/multiple_posts_review.js' %}"></script>
+{% endblock %}

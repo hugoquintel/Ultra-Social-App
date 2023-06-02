@@ -1,0 +1,43 @@
+* {
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 62.5%;
+    line-height: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+.pull-down-1px{
+    transform: translateY(2px)
+}
+
+.pull-down-2px{
+    transform: translateY(2px)
+}
+
+.pull-up-8px{
+    transform: translateY(-8px)
+}
+
+.rounded{
+    border-radius: 50% !important;
+}
+
+.border-none{
+    border: none !important;
+}
+
+.badge{
+    display: inline-block;
+    background: #FF5555;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 20px;
+}
+

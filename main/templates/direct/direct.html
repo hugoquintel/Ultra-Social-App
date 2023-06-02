@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/direct/message.css' %}">
+<!-- Begin: Message -->
+<div class="message column is-10">
+    <div class="message__card columns card column is-9">
+        <div class="message__card__users column is-4">
+            <h1 class="title is-2 has-text-centered">
+                People
+            </h1>
+            <ul class="message__card-list menu-list">
+                <div class="message__card-item-search field mb-5">
+                    <p class="control has-text-centered is-centered">
+                        <a href="{% url 'usersearch'%}" type="submit" value="login" class="message__card-item-search-btn button is-large is-primary">
+                            <i class="pull-down-1px fa-solid fa-magnifying-glass mr-1"></i>
+                            Search people
+                        </a>
+                    </p>
+                </div>
+                {% for message in messages %}
+                <a href="{% url 'directs' message.user.username %}" class="message__card-item dropdown-item">
+                    <div class="box {% if active_direct == message.user.username %} item-is-active {% endif %} message__card-item-people mr-3">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    {% if message.user.profile.picture %}
+                                    <img class="message__card-item-img is-rounded" src="{{ message.user.profile.picture.url }}">
+                                    {% else %}
+                                    <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Image">
+                                    {% endif %}
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p class="title is-4 mt-3 mb-3">
+                                        {% if message.user.profile.first_name %}
+                                            {{ message.user.profile.first_name}} {{ message.user.profile.last_name }} 
+                                        {% else %}
+                                            User {{ message.user.profile.id }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="subtitle is-5 mt-0">@{{ message.user.username }}</p>
+                                </div>
+                            </div>
+                            <div class="media-right">
+                                {% if message.unread %}
+                                <div class="content">
+                                    <p class="badge subtitle is-5 mt-0 mt-3">{{ message.unread }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </article>
+                    </div>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="message__card__text column is-8">
+            <h1 class="title is-2 has-text-centered">Messages</h1>
+            <ul class="message__card__text-list menu-list">
+                {% for direct in directs %}
+                    {% if direct.sender == request.user %}
+                    <div class="box mr-4 has-background-grey-lighter">
+                        <article class="media">
+                            <div class="media-content">
+                                <p class="has-text-right">
+                                    <small class="subtitle is-5 mb-0 mr-2">@{{ direct.sender.username }}</small>
+                                    <strong class="title is-4 mt-3">
+                                        {% if direct.sender.profile.first_name %}
+                                            {{ direct.sender.profile.first_name}} {{ direct.sender.profile.last_name }} 
+                                        {% else %}
+                                            User {{ direct.sender.profile.id }}
+                                        {% endif %}
+                                    </strong>
+                                    <div class="content mt-2">
+                                        <p class="subtitle is-4">
+                                            {{direct.body}}
+                                        </p>
+                                    </div>
+                                    <time class="title is-5 is-pulled-right mb-0">{{direct.date|date:'N d G:i'}}</time>
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                    {% else %}
+                    <div class="box mr-4">
+                        <article class="media">
+                            <div class="media-content">
+                                <p>
+                                    <strong class="title is-4 mt-3">
+                                        {% if direct.sender.profile.first_name %}
+                                            {{ direct.sender.profile.first_name}} {{ direct.sender.profile.last_name }} 
+                                        {% else %}
+                                            User {{ direct.sender.profile.id }}
+                                        {% endif %}
+                                    </strong>
+                                    <small class="subtitle is-5 mb-0 ml-2">                                    
+                                        @{{ direct.sender.username }}
+                                    </small>
+                                    <div class="content mt-2">
+                                        <p class="subtitle is-4">
+                                            {{direct.body}}
+                                        </p>
+                                    </div>
+                                    <time class="title is-5 is-pulled-right mb-0">{{direct.date|date:'N d G:i'}}</time>
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <hr>
+            <form role="form" method="POST" action="{% url 'send_direct' %}"> {% csrf_token %}
+                <article class="message__card__text-chat media ">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            {% if request.user.profile.picture %}
+                            <img class="message__card-item-img is-rounded" src="{{ request.user.profile.picture.url }}">
+                            {% else %}
+                            <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Image">
+                            {% endif %}
+                        </p>
+                    </figure>
+                    <div class="media-content mr-4">
+                        <input type="hidden" name="to_user" value="{{active_direct}}">
+                        <div class="field">
+                            <p class="control">
+                                <textarea class="textarea subtitle is-4 mb-3" name="body" placeholder="Send message"></textarea>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <div class="buttons are-large level-right">
+                                    <button type="submit" name="action" class="button is-info is-light">Send</button>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </form>
+        </div>
+    </div>	
+</div>
+<!-- End: Message -->
+{% endblock %}

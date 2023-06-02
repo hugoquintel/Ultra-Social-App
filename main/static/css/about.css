@@ -1,0 +1,23 @@
+hr{
+    background-color: #f0f0f0;
+}
+
+html{
+    background-color: #f0f0f0;
+}
+
+.about{
+    margin-left: 16.66667%;
+    
+}
+
+.about-title{
+    font-size: 5rem;
+}
+
+.about-img{
+    border: 5px solid #ccc;
+    max-width: 256px;
+    max-height: 256px;
+    min-height: 256px;
+}

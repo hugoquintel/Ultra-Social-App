@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<div class="main">
+	<!-- Begin: Profile -->
+	<section class="profile section">
+		<div class="profile-container container">
+			<article class="profile-container-media media">
+				<div class="media-left">
+					<figure class="image is-128x128">
+						{% if profile.picture %}
+						<img class="profile-container-media-image is-rounded" src="{{ profile.picture.url }}">
+						{% else %}
+						<img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+						{% endif %}
+					</figure>
+				</div>
+				<div class="profile-container-media-left media-left">
+					<div class="media-left mb-3">
+						<p class="m-0 title is-2">
+							{% if profile.first_name %}
+								{{ profile.first_name}} {{ profile.last_name }} 
+							{% else %}
+								User {{ profile.id }}
+							{% endif %}
+						</p>
+						<p class="m-0 subtitle is-4">@{{ profile.user }}</p>
+					</div>
+					{% if user.is_authenticated and user != profile.user %}
+					<span>
+						{% if follow_status == True %}
+						<!-- {% comment %}
+						<a href="{% url 'follow' profile.user 0 %}" class="button is-light is-medium mb-3"><i class="fa-solid fa-check mr-2"></i>Followed</a>
+						{% endcomment %} -->
+						<div user-id="{{profile.user.id}}" option="0" name="{{profile.user.username}}" class="button is-light is-medium mb-3 follow"><i class="fa-solid fa-check mr-2"></i>Followed</div>
+						{% else %}
+						<!-- {% comment %}
+						<a href="{% url 'follow' profile.user 1 %}" class="button is-light is-medium mb-3">Follow</a>
+						{% endcomment %} -->
+						<div user-id="{{profile.user.id}}" option="1" name="{{profile.user.username}}" class="button is-light is-medium mb-3 follow">Follow</div>
+						{% endif %}
+						<a href="{% url 'newconversation' profile.user.username %}" class="button is-light is-medium mb-3 ml-4"><i class="fa-solid fa-inbox mr-2"></i>Message</a>
+					</span>
+					{% endif %}
+					{% if user.is_authenticated and user == profile.user %}
+					<a href="{% url 'edit-profile' %}" class="button is-light is-medium mb-3">Edit profile</a>
+					{% endif %}
+					<div class="profile-container-media-left-bio media-left mb-3">
+						<p class=" subtitle is-5">
+							{% if profile.profile_info %}
+								{{ profile.profile_info }}
+							{% endif %}
+						</p>
+					</div>
+					<nav class="profile-container-level level is-mobile">
+						<div class="level-item has-text-centered mr-6">
+							<div>
+								<p class="heading">Posts</p>
+								<p class="title is-4">{{ posts_count }}</p>
+							</div>
+						</div>
+						<div class="level-item has-text-centered mr-6">
+							<div>
+								<p class="heading">Following</p>
+								<p class="title is-4">{{ following_count }}</p>
+							</div>
+						</div>
+						<div class="level-item has-text-centered mr-6">
+							<div>
+								<p class="heading">Followers</p>
+								<p class="title is-4">{{ followers_count }}</p>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</article>
+		</div>
+	</section>
+	<!-- End: Profile -->
+	<!-- Begin: Tab -->
+	<div class="my-tabs tabs is-large is-centered">
+		<ul>
+			<li class="{% if url_name == 'profile' %} is-active {% endif %}">
+				<a href="{% url 'profile' profile.user %}"><i class="fa-solid fa-table mr-4 pull-down-1px"></i>Posts</a>
+			</li>
+			<li class="{% if url_name == 'profilefavorites' %} is-active {% endif %}">
+				<a href="{% url 'profilefavorites' profile.user %}"><i class="fa-solid fa-bookmark mr-4 pull-down-1px"></i>Saved</a>
+			</li>
+		</ul>
+	</div>
+	<!-- End: Tab -->
+	<!-- Begin: Posts -->
+	<section class="post section">
+		<div class="container">
+			<div class="columns is-mobile is-multiline is-centered">
+				{% for post in posts %}
+				<div class="column is-one-quarter">
+					<div class="box">
+						{% if post.content.first.file.name|slice:"-3:" == 'jpg' or post.content.first.file.name|slice:"-3:" == 'png' %}
+						<figure class="image is-1by1">
+							<a href="{{ post.get_absolute_url }}">
+								<img src="{{ post.content.first.file.url }}" alt="Placeholder image">
+							</a>
+						</figure>
+						{% else %}
+						<a href="{{ post.get_absolute_url }}">
+							<video class="is-clickable" controls="controls" preload="metadata">
+								<source src="{{ post.content.first.file.url }}#t=0.5" type="video/mp4">
+							</video>
+						</a>
+						{% endif %}
+					</div>
+				</div>
+				{% empty %}
+				<h1 class="title is-2">No posts available</h1>
+				{% endfor %}
+
+			</div>
+		</div>
+	</section>
+	<!-- End: Posts -->
+</div>
+<script src="{% static 'js/profile_ajax.js' %}"></script>
+{% endblock %}
