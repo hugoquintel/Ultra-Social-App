@@ -42,7 +42,7 @@ celery==5.2.7
 
 ## Functional story
 
-- To make a the story with proper function (deleted when expired), [celery](https://docs.celeryq.dev/en/stable/getting-started/introduction.html) must be added with a broker, [RabbitMQ](https://www.rabbitmq.com/) is used for this project.
+- To enable story with proper function (deleted when expired), [celery](https://docs.celeryq.dev/en/stable/getting-started/introduction.html) must be added with a broker, [RabbitMQ](https://www.rabbitmq.com/) is used for this project.
 
 - Watch the tutorial how to add celery task to story [here](https://www.youtube.com/watch?v=UU6PfdyWADc&list=PL9tgJISrBWc5619CclyqYrnnMkVOPzVYM&index=36&ab_channel=LaraCode)
 
@@ -77,9 +77,20 @@ celery -A [app_name] worker --pool=eventlet
 ![Screen](screenshots/screen8.png?raw=true)
 
 
+![Screen](screenshots/screen9.png?raw=true)
+
+
+![Screen](screenshots/screen10.png?raw=true)
+
+
+![Screen](screenshots/screen11.png?raw=true)
+
+
+
 
 
 ## Built With
 * [Bulma](https://bulma.io/) - Bulma is a free, open source CSS framework based on Flexbox
 * [Django](https://www.djangoproject.com/) - Web framework
 * [jQuery](https://jquery.com/) - JavaScript library
+* [Fontawesome](https://fontawesome.com/) - Internet's icon library and toolkit

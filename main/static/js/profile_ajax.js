@@ -4,6 +4,7 @@ $(".follow").click(function() {
     const id = $(this).attr("user-id");
     
     $.get(`/${name}/follow/${option}`, function(data, status){
+        
         if (option == 1){
             $(`.follow[user-id="${id}"]`).attr("class", "button is-light is-medium mb-3 follow")
             $(`.follow[user-id="${id}"]`).text("Followed").prepend(`<i class="fa-solid fa-check mr-2">`)
@@ -13,7 +14,7 @@ $(".follow").click(function() {
             $(`.follow[user-id="${id}"]`).text("Follow")
         }
         // $(`.follow[user-id="${id}"] i`).attr("class", option ? "fa-solid fa-heart" : None)
-        
+        $('.followers_count').text(data.followers_count)
     });
     
     if (option === 1){

@@ -151,6 +151,7 @@ def follow(request, username, option):
 
 	try:
 		f, created = Follow.objects.get_or_create(follower=request.user, following=following)
+		
 
 		if int(option) == 0:
 			f.delete()
@@ -163,7 +164,8 @@ def follow(request, username, option):
 					stream = Stream(post=post, user=user, date=post.posted, following=following)
 					stream.save()
 
-		return JsonResponse({'follow': option})
+		followers_count = Follow.objects.filter(following=following).exclude(follower=following).count()
+		return JsonResponse({'option': option, 'followers_count': followers_count, 'user': following.username})
 		# return redirect(reverse('profile', args=[username]))
 	
 	except User.DoesNotExist:
