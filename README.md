@@ -50,6 +50,10 @@ celery==5.2.7
 ```
 celery -A [app_name] worker --pool=eventlet
 ```
+To start a celery worker with this project:
+```
+celery -A main worker --pool=eventlet
+```
 
 ## Screenshots
 
