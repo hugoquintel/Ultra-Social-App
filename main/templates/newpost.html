@@ -14,29 +14,34 @@
 							<figure class="image is-256x256 placeholder">
 								<img class="img-review" src="{% static 'img/placeholder.jpg' %}">
 							</figure>
-						<p class="newpost-form-content control mt-4">
-							<label class="label is-large has-text-info title is-size-3">Upload your files (images and videos only)</label>
-							{{ form.content }}
-						</p>
+							<p class="newpost-form-content control mt-4">
+								<label class="label is-large has-text-info title is-size-3">Upload your files (images and videos only)</label>
+								{{ form.content }}
+							</p>
 						</div>
 						<div class="field">
-						<p class="newpost-form-content control">
-							<label class="label is-large has-text-info is-pulled-left">Caption</label>
-							{{ form.caption }}
-						</p>
+							<p class="newpost-form-content control">
+								<label class="label is-large has-text-info is-pulled-left">Caption</label>
+								{{ form.caption }}
+							</p>
 						</div>
 						<div class="field">
-						<p class="newpost-form-content control">
-							<label class="label is-large has-text-info is-pulled-left">Tags (add tags, separated by commas)</label>
-							{{ form.tags }}
-						</p>
+							<p class="newpost-form-content control">
+								<label class="label is-large has-text-info is-pulled-left">Tags (add tags, separated by commas)</label>
+								{{ form.tags }}
+							</p>
+						</div>
+						<div class="row mt-6">
+							<div class="col s12">
+								<span style="color: red; font-weight: bold;">{{form.errors}}</span>
+							</div>
 						</div>
 						<div class="field">
-						<p class="control">
-							<button type="submit" name="action" class="button is-info is-medium is-primary is-fullwidth mt-5">
-							Create
-							</button>
-						</p>
+							<p class="control">
+								<button type="submit" name="action" class="button is-info is-medium is-primary is-fullwidth mt-5">
+								Create
+								</button>
+							</p>
 						</div>
 					</form>
 				</div>

@@ -1,10 +1,18 @@
+import os
 from django import forms
 from post.models import Post
+from django.core.exceptions import ValidationError
 
 from django.forms import ClearableFileInput
 
+def validate_file_extension(value):
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.jpg','.jpeg','.png', '.mp4']
+    if not ext in valid_extensions:
+        raise ValidationError('One of the files is not supported!')
+
 class NewPostForm(forms.ModelForm):
-    content = forms.FileField(widget=forms.ClearableFileInput(attrs={"multiple": True, "class": "img-input"}), required=True)
+    content = forms.FileField(widget=forms.ClearableFileInput(attrs={"multiple": True, "class": "img-input"}), validators=[validate_file_extension], required=True)
     caption = forms.CharField(widget=forms.Textarea(attrs={"class": "input is-medium"}), required=True)
     tags = forms.CharField(widget=forms.TextInput(attrs={"class": "input is-medium"}), required=True)
 

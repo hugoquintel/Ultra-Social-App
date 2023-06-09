@@ -38,6 +38,7 @@ django-celery-beat==2.2.1
 django-cleanup==7.0.0
 eventlet==0.33.3
 celery==5.2.7
+pillow==9.3.0
 ```
 
 ## Functional story
