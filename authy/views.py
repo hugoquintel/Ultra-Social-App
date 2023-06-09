@@ -165,17 +165,12 @@ def follow(request, username, option):
 					stream.save()
 
 		followers_count = Follow.objects.filter(following=following).exclude(follower=following).count()
-		return JsonResponse({'option': option, 'followers_count': followers_count, 'user': following.username})
+		return JsonResponse({'option': option, 'followers_count': followers_count})
 		# return redirect(reverse('profile', args=[username]))
 	
 	except User.DoesNotExist:
 		return redirect(reverse('profile', args=[username]))
 	
-	
-
-
-
-
 @login_required
 def Explore(request):
 	query = request.GET.get("q")

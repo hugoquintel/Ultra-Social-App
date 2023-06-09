@@ -20,11 +20,19 @@
 			{% for post in posts %}
 			<div class="column is-one-quarter">
 				<div class="box">
-					<figure class="tags-image image is-1by1">
+					{% if post.content.first.file.name|slice:"-3:" == 'jpg' or post.content.first.file.name|slice:"-3:" == 'png' %}
+					<figure class="image is-1by1">
 						<a href="{{ post.get_absolute_url }}">
-							<img src="{{ post.picture.url }}" alt="Image">
+							<img src="{{ post.content.first.file.url }}" alt="Placeholder image">
 						</a>
 					</figure>
+					{% else %}
+					<a href="{{ post.get_absolute_url }}">
+						<video class="is-clickable" controls="controls" preload="metadata">
+							<source src="{{ post.content.first.file.url }}#t=0.5" type="video/mp4">
+						</video>
+					</a>
+					{% endif %}
 				</div>
 			</div>
 			{% endfor %}

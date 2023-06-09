@@ -106,7 +106,6 @@ def UserSearch(request):
 @login_required
 def NewConversation(request, username):
 	from_user = request.user
-	body = 'Hello!'
 
 	try:
 		to_user = User.objects.get(username=username)
@@ -115,7 +114,12 @@ def NewConversation(request, username):
 	
 	# Prevent the user from DMing themselves
 	if from_user != to_user:
-		Message.send_message(from_user, to_user, body)
+		Message.objects.get_or_create(
+			user = from_user,
+			sender = from_user,
+			recipient = to_user,
+			body = None
+		)
 	else:
 		pass
 	

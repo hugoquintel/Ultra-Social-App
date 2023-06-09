@@ -60,54 +60,56 @@
             <h1 class="title is-2 has-text-centered">Messages</h1>
             <ul class="message__card__text-list menu-list">
                 {% for direct in directs %}
-                    {% if direct.sender == request.user %}
-                    <div class="box mr-4 has-background-grey-lighter">
-                        <article class="media">
-                            <div class="media-content">
-                                <p class="has-text-right">
-                                    <small class="subtitle is-5 mb-0 mr-2">@{{ direct.sender.username }}</small>
-                                    <strong class="title is-4 mt-3">
-                                        {% if direct.sender.profile.first_name %}
-                                            {{ direct.sender.profile.first_name}} {{ direct.sender.profile.last_name }} 
-                                        {% else %}
-                                            User {{ direct.sender.profile.id }}
-                                        {% endif %}
-                                    </strong>
-                                    <div class="content mt-2">
-                                        <p class="subtitle is-4">
-                                            {{direct.body}}
-                                        </p>
-                                    </div>
-                                    <time class="title is-5 is-pulled-right mb-0">{{direct.date|date:'N d G:i'}}</time>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-                    {% else %}
-                    <div class="box mr-4">
-                        <article class="media">
-                            <div class="media-content">
-                                <p>
-                                    <strong class="title is-4 mt-3">
-                                        {% if direct.sender.profile.first_name %}
-                                            {{ direct.sender.profile.first_name}} {{ direct.sender.profile.last_name }} 
-                                        {% else %}
-                                            User {{ direct.sender.profile.id }}
-                                        {% endif %}
-                                    </strong>
-                                    <small class="subtitle is-5 mb-0 ml-2">                                    
-                                        @{{ direct.sender.username }}
-                                    </small>
-                                    <div class="content mt-2">
-                                        <p class="subtitle is-4">
-                                            {{direct.body}}
-                                        </p>
-                                    </div>
-                                    <time class="title is-5 is-pulled-right mb-0">{{direct.date|date:'N d G:i'}}</time>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
+                    {% if direct.body != None %}
+                        {% if direct.sender == request.user %}
+                        <div class="box mr-4 has-background-grey-lighter">
+                            <article class="media">
+                                <div class="media-content">
+                                    <p class="has-text-right">
+                                        <small class="subtitle is-5 mb-0 mr-2">@{{ direct.sender.username }}</small>
+                                        <strong class="title is-4 mt-3">
+                                            {% if direct.sender.profile.first_name %}
+                                                {{ direct.sender.profile.first_name}} {{ direct.sender.profile.last_name }} 
+                                            {% else %}
+                                                User {{ direct.sender.profile.id }}
+                                            {% endif %}
+                                        </strong>
+                                        <div class="content mt-2">
+                                            <p class="subtitle is-4">
+                                                {{direct.body}}
+                                            </p>
+                                        </div>
+                                        <time class="title is-5 is-pulled-right mb-0">{{direct.date|date:'N d G:i'}}</time>
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        {% else %}
+                        <div class="box mr-4">
+                            <article class="media">
+                                <div class="media-content">
+                                    <p>
+                                        <strong class="title is-4 mt-3">
+                                            {% if direct.sender.profile.first_name %}
+                                                {{ direct.sender.profile.first_name}} {{ direct.sender.profile.last_name }} 
+                                            {% else %}
+                                                User {{ direct.sender.profile.id }}
+                                            {% endif %}
+                                        </strong>
+                                        <small class="subtitle is-5 mb-0 ml-2">                                    
+                                            @{{ direct.sender.username }}
+                                        </small>
+                                        <div class="content mt-2">
+                                            <p class="subtitle is-4">
+                                                {{direct.body}}
+                                            </p>
+                                        </div>
+                                        <time class="title is-5 is-pulled-right mb-0">{{direct.date|date:'N d G:i'}}</time>
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </ul>
