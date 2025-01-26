@@ -88,9 +88,6 @@ celery -A main worker --pool=eventlet
 ![Screen](screenshots/screen10.png?raw=true)
 
 
-![Screen](screenshots/screen11.png?raw=true)
-
-
 
 
 
